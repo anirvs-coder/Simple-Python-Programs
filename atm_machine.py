@@ -11,7 +11,7 @@ user_data = {
     "Rachel": 4489
 }
 if check_if_first_time == "yes":
-    user_name = input("What is your name:")
+    user_name = input("What is your name")
     while x < 4:
         code.append(random.choice(number))
         x = x + 1.
