@@ -4,29 +4,62 @@ code = []
 number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 check_if_first_time = input("Is this your first time using ASA ATM's:")
 x = 0
-user_data = {
+user_codes = {
     "Peter": 6275,
     "John": 2012,
     "Jack": 7242,
     "Rachel": 4489
 }
+
+user_balances = {
+    "Peter": 50,
+    "John": 50,
+    "Jack": 50,
+    "Rachel": 50
+}
 if check_if_first_time == "yes":
-    user_name = input("What is your name")
+    new_user_name = input("What is your name:")
     while x < 4:
         code.append(random.choice(number))
         x = x + 1.
     print(code)
-    user_data.update({user_name: code})
+    user_codes.update({new_user_name: code})
+    print("Your starting balance will be $50.")
 
 elif check_if_first_time == "no":
-    name_check = input("What is your name:")
-    code_check = int(input("What is your code:"))
-    all_values = user_data.values()
-    for i in all_values:
-        print(i)
+    user_name = input("What is your name:")
+    user_code = int(input("What is your code:"))
+    all_users = user_codes.keys()
+    for i in all_users:
+        if i == user_name:
+            break
+        else:
+            print("There is no user named " + user_name + ". Wait a minute... You are a scammer aren't you. "
+                                                          "CALLING 911...")
+            break
+    code_check = user_codes.get(i)
+    if code_check == user_code:
+        deposit_or_withdraw = input("Would you like to deposit or withdraw money:")
+        if deposit_or_withdraw == "deposit":
+            balance_check = user_balances.get(i)
+            print("Your current balance is: $" + str(balance_check) + ".")
+            amount_to_deposit = int(input("How much would you like to deposit:"))
+            user_balances[i] = balance_check + amount_to_deposit
+            print("Your updated balance is: $" + str(user_balances.get(i)) + ".")
+        elif deposit_or_withdraw == "withdraw":
+            balance_check = user_balances.get(i)
+            print("Your current balance is: $" + str(balance_check) + ".")
+            amount_to_withdraw = int(input("How much would you like to withdraw:"))
+            user_balances[i] = balance_check - amount_to_withdraw
+            updated_balance = balance_check - amount_to_withdraw
+            if updated_balance > 0:
+                print("Your updated balance is: $" + str(user_balances.get(i)) + ".")
+            else:
+                print("You cant withdraw that amount.")
 
-# else: print("There is no code with " + str(code_check) + ". Wait a minute... You are a scammer aren't you. CALLING
-# ""911...")
+    else:
+        print("There is no code " + str(user_code) + ". Wait a minute... You are a scammer aren't you. "
+                                                     "CALLING 911...")
 
 else:
     print("Please type in yes or no.")
