@@ -4,12 +4,7 @@ code = []
 number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 check_if_first_time = input("Is this your first time using ASA ATM's:")
 x = 0
-user_codes = {
-    "Peter": 6275,
-    "John": 2012,
-    "Jack": 7242,
-    "Rachel": 4489
-}
+
 
 user_balances = {
     "Peter": 50,
@@ -23,7 +18,10 @@ if check_if_first_time == "yes":
         code.append(random.choice(number))
         x = x + 1.
     print(code)
-    user_codes.update({new_user_name: code})
+    user_codes = open("user_data.txt", "a")
+    user_codes.write(new_user_name + ": " + str(code))
+    user_codes.close()
+
     print("Your starting balance will be $50.")
 
 elif check_if_first_time == "no":

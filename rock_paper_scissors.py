@@ -14,10 +14,13 @@ if single_or_two_player == "one":
     player_beated = what_beats_what.get(player_choice)
     if player_beated == computer_choice:
         print("YOU WIN!!!!")
+        print("The computer played: " + computer_choice + ".")
     elif player_choice == computer_choice:
         print("Tie.")
+        print("The computer played: " + computer_choice + ".")
     else:
         print("you lose....")
+        print("The computer played: " + computer_choice + ".")
 elif single_or_two_player == "two":
     player_one_choice = input("Player 1 choice:")
     player_two_choice = input("Player 2 choice:")
