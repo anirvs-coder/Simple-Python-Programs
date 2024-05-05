@@ -1,17 +1,32 @@
-amount_of_numbers = int(input("How many numbers would you like to find the GCF and LCM of:"))
-if amount_of_numbers <= 1:
-    print("You must have 2+ numbers")
-    breakpoint()
-elif amount_of_numbers > 10:
-    print("You must have less than 10 numbers")
-    breakpoint()
+def find_gcf(x, y):
+    while (y):
+        x, y = y, x % y
 
-x = 0
-all_numbers = []
-while x < amount_of_numbers:
-    number = int(input("What is your first number:"))
-    all_numbers.append(number)
-    x = x + 1
+    return x
 
 
+which_one = input("Would you like to find the GCF or LCM of your specified numbers:")
+numbers = []
+how_many_nums = int(input("How many numbers would you like to use:"))
+if how_many_nums < 2:
+    print("That is not enough numbers.")
+else:
+    x = 0
+    while how_many_nums > x:
+        number = int(input("What is the number:"))
+        numbers.append(number)
+        x = x + 1
 
+    if which_one == "gcf" or "GCF":
+        num1 = numbers[0]
+        num2 = numbers[1]
+        gcf = find_gcf(num1, num2)
+
+        for i in range(2, len(numbers)):
+            gcf = find_gcf(gcf, numbers[i])
+
+        print(gcf)
+    elif which_one == "lcm" or "LCM":
+        print()
+    else:
+        print()
