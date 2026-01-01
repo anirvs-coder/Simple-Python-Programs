@@ -1,0 +1,13 @@
+import time
+import random
+
+print("Get ready...")
+time.sleep(random.randint(1, 5))  # Wait random time
+print("GO!")
+
+start_time = time.time()
+input("Press Enter as fast as you can!")
+end_time = time.time()
+
+reaction_time = end_time - start_time
+print(f"Your reaction time: {reaction_time:.3f} seconds")
