@@ -1,0 +1,127 @@
+import random
+import time
+import sys
+
+def rolling(spin):
+    z = 0
+    y = 0.25
+    while True:
+        sys.stdout.write(f"\r🔴{z}   ")
+        sys.stdout.flush()
+        z += 1
+        time.sleep(y)
+        if z == spin:
+            sys.stdout.write(f"\r🔴{z}   ")
+            sys.stdout.flush()
+            break
+        sys.stdout.write(f"\r⚫{z}   ")
+        sys.stdout.flush()
+        z += 1
+        time.sleep(y)
+        if z == spin:
+            sys.stdout.write(f"\r⚫{z}   ")
+            sys.stdout.flush()
+            break
+
+print("🎯--ROULETTE--🎯")
+credits = 100
+print("Credits: " + str(credits))
+x = 0
+while x < 1:
+    print("""\nChoose your bet type:
+    1. Specific number (pays 35:1)
+    2. Red or Black (pays 1:1)
+    3. Odd or Even (pays 1:1)
+    4. Exit
+    """)
+    bet_type = int(input("Choose your option: "))
+    if 4 < bet_type or bet_type < 1:
+        print("\nThat number does not work. Please try again.")
+    if bet_type == 1:
+        spin = random.randint(0, 36)
+        number = int(input("What number would you like to bet on: "))
+        if number > 26 or number < 0:
+            print("Must be a number 0-36.")
+        bet = int(input("How much would you like to bet: "))
+        winnable_credits = bet * 35
+        rolling(spin)
+        if spin == number:
+            credits = credits + winnable_credits
+            print("It landed on your number, which means you won " + str(winnable_credits) + " credits! Your total credits is now: " + str(credits) + ".")
+            if credits <= 0:
+                print("You ran out of credits.")
+                x = x + 1
+        else:
+            credits = credits - bet
+            print("It landed on " + str(spin) + ", which means you lost " + str(bet) + " credits. Your total credits is now: " + str(credits) + ".")
+            if credits <= 0:
+                print("You ran out of credits.")
+                x = x + 1
+    elif bet_type == 2:
+        spin = random.randint(0, 36)
+        color = input("What color would you like to bet on: ")
+        if color != "red" or "black":
+            print("Must be red or black.")
+        bet = int(input("How much would you like to bet: "))
+        rolling(spin)
+        if spin % 2 == 0:
+            if color == "red":
+                credits = credits + bet
+                print("It landed on red, so you won " + str(bet) + " credits! Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+            if color == "black":
+                credits = credits - bet
+                print("It landed on red, so you lost " + str(bet) + " credits. Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+        if spin % 2 != 0:
+            if color == "red":
+                credits = credits - bet
+                print("It landed on black, so you lost " + str(bet) + " credits. Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+            if color == "black":
+                credits = credits + bet
+                print("It landed on black, so you won " + str(bet) + " credits! Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+    elif bet_type == 3:
+        spin = random.randint(0, 36)
+        even_odd = input("Evens or odds: ")
+        if even_odd != "even" or "odd":
+            print("Must be even or odd.")
+        bet = int(input("How much would you like to bet: "))
+        rolling(spin)
+        if spin % 2 == 0:
+            if even_odd == "evens":
+                credits = credits + bet
+                print("It landed on " + str(spin) + ", so you won " + str(bet) + " credits! Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+            if even_odd == "odd":
+                credits = credits - bet
+                print("It landed on " + str(spin) + ", so you lost " + str(bet) + " credits. Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+        if spin % 2 != 0:
+            if even_odd == "even":
+                credits = credits - bet
+                print("It landed on " + str(spin) + ", so you lost " + str(bet) + " credits. Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+            if even_odd == "odd":
+                credits = credits + bet
+                print("It landed on " + str(spin) + ", so you won " + str(bet) + " credits! Your total credits is now: " + str(credits) + ".")
+                if credits <= 0:
+                    print("You ran out of credits.")
+                    x = x + 1
+    elif bet_type == 4:
+        x = x + 1
