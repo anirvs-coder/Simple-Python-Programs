@@ -1,0 +1,107 @@
+import random
+
+# Create a deck with 52 cards
+ranks = list(range(1, 14))
+suits = ["Diamond", "Heart", "Spade", "Club"]
+
+deck = []
+for s in suits:
+    for r in ranks:
+        if r > 10:
+            deck.append(10)
+        else:
+            deck.append(r)
+
+random.shuffle(deck)
+
+
+process = input("Would you(u) like to control wars or let the computer(c) choose? ")
+p1 = deck[:26]
+p2 = deck[26:]
+
+def war(p1, p2, pile):
+    print("\n⚔️----WAR----⚔️")
+
+    if process == "u":
+        try:
+            p1pick = int(input("\nP1 pick number 1 to 4: "))
+        except ValueError:
+            p1pick = 1
+        try:
+            p2pick = int(input("P2 pick number 1 to 4: "))
+        except ValueError:
+            p2pick = 1
+    else:
+        p1pick = random.randint(1, 4)
+        p2pick = random.randint(1, 4)
+
+    w1 = []
+    w2 = []
+    for _ in range(4):
+        if p1:
+            w1.append(p1.pop(0))
+        if p2:
+            w2.append(p2.pop(0))
+
+    p1pick = min(max(p1pick, 1), len(w1))
+    p2pick = min(max(p2pick, 1), len(w2))
+
+    war_card_1 = w1[p1pick - 1]
+    war_card_2 = w2[p2pick - 1]
+
+    print("P1 plays", war_card_1)
+    print("P2 plays", war_card_2)
+
+    pile.extend(w1)
+    pile.extend(w2)
+
+    if war_card_1 > war_card_2:
+        p1.extend(pile)
+        print("P1 wins war")
+    elif war_card_1 < war_card_2:
+        p2.extend(pile)
+        print("P2 wins war")
+    else:
+        if len(p1) < 4:
+            p2.extend(pile)
+            print("P1 cannot continue war. P2 wins the war.")
+        elif len(p2) < 4:
+            p1.extend(pile)
+            print("P2 cannot continue war. P1 wins the war.")
+        else:
+            print("WAR again!")
+            war(p1, p2, pile)
+
+# Game loop
+while p1 and p2:
+    c1 = p1.pop(0)
+    c2 = p2.pop(0)
+    print("\nP1 plays", c1)
+    print("P2 plays", c2)
+
+    pile = [c1, c2]
+
+    if c1 > c2:
+        p1.extend(pile)
+        print("P1 wins")
+    elif c1 < c2:
+        p2.extend(pile)
+        print("P2 wins")
+    else:
+        if len(p1) < 4:
+            print("P1 doesn't have enough cards for war. P2 wins the game.")
+            break
+        elif len(p2) < 4:
+            print("P2 doesn't have enough cards for war. P1 wins the game.")
+            break
+        else:
+            war(p1, p2, pile)
+
+    print("P1 has", len(p1), "cards")
+    print("P2 has", len(p2), "cards")
+
+# Declare winner
+if not p1:
+    print("\nP2 wins the game!")
+elif not p2:
+    print("\nP1 wins the game!")
