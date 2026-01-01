@@ -1,0 +1,91 @@
+import random
+
+cards = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "10", "10", "10"]
+
+user_cards = random.sample(cards, 2)
+dealer_cards = random.sample(cards, 2)
+
+print("Your cards:", user_cards)
+def card_value(card):
+    if card == "Ace":
+        return [1, 11]
+    else:
+        return [10] if card == "10" else [int(card)]
+
+totals = [0]
+for card in user_cards:
+    values = card_value(card)
+    new_totals = []
+    for t in totals:
+        for v in values:
+            new_totals.append(t + v)
+    totals = new_totals
+
+totals = sorted(set(totals))
+print("Your possible totals:", totals)
+
+print("Dealer shows one card:", dealer_cards[1])
+
+while True:
+    user_choice = input("Would you like to hit or stand: ").lower()
+    if user_choice == "stand":
+        break
+    elif user_choice == "hit":
+        new_card = random.choice(cards)
+        print("You drew:", new_card)
+        values = card_value(new_card)
+        new_totals = []
+        for t in totals:
+            for v in values:
+                new_totals.append(t + v)
+        totals = sorted(set(new_totals))
+        print("Your possible totals:", totals)
+        if all(t > 21 for t in totals):
+            print("You busted. Dealer wins.")
+            exit()
+    else:
+        print("Please enter 'hit' or 'stand'.")
+
+print("\nDealer's cards:", dealer_cards)
+
+dealer_totals = [0]
+for card in dealer_cards:
+    values = card_value(card)
+    new_totals = []
+    for t in dealer_totals:
+        for v in values:
+            new_totals.append(t + v)
+    dealer_totals = new_totals
+
+dealer_totals = sorted(set(dealer_totals))
+print("Dealer's possible totals:", dealer_totals)
+
+while max([t for t in dealer_totals if t <= 21] or dealer_totals) < 17:
+    new_card = random.choice(cards)
+    print("Dealer draws:", new_card)
+    values = card_value(new_card)
+    new_totals = []
+    for t in dealer_totals:
+        for v in values:
+            new_totals.append(t + v)
+    dealer_totals = sorted(set(new_totals))
+    print("Dealer's possible totals:", dealer_totals)
+
+def best(totals):
+    good = [t for t in totals if t <= 21]
+    return max(good) if good else min(totals)
+
+print("\nFinal Results:")
+print("Your best total:", best(totals))
+print("Dealer best total:", best(dealer_totals))
+
+if best(totals) > 21:
+    print("You busted. Dealer wins.")
+elif best(dealer_totals) > 21:
+    print("Dealer busted. You win.")
+elif best(totals) > best(dealer_totals):
+    print("You win.")
+elif best(dealer_totals) > best(totals):
+    print("Dealer wins.")
+else:
+    print("It's a tie.")
