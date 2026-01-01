@@ -1,0 +1,55 @@
+import time
+import random
+
+slots = ["🍒", "🔔", "💎", "7️⃣"]
+credits = 10
+x = 0
+while x < 1:
+    choice = input("Roll or Exit: ")
+    if choice.lower() == "roll":
+        slot1 = random.choice(slots)
+        slot2 = random.choice(slots)
+        slot3 = random.choice(slots)
+        credits = credits - 1
+        print("Spinning...")
+        time.sleep(1)
+        print(slot1 + " "  + slot2 + " " + slot3)
+        if slot1 == slot2:
+            if slot1 == slot3:
+                credits = credits + 6
+                print("JACKPOT! +5 credits! You now have " + str(credits) + " credits.")
+            else:
+                maybe = random.randint(1, 2)
+                if maybe == 1:
+                    credits = credits + 1
+                    print("Near miss. +1 credits. You now have " + str(credits) + " credits.")
+                else:
+                    print("Near miss. +0 credits. You now have " + str(credits) + " credits.")
+        elif slot1 == slot3:
+            if slot1 == slot2:
+                credits = credits + 6
+                print("JACKPOT! +5 credits! You now have " + str(credits) + " credits.")
+            else:
+                maybe = random.randint(1, 2)
+                if maybe == 1:
+                    credits = credits + 1
+                    print("Near miss. +1 credits. You now have " + str(credits) + " credits.")
+                else:
+                    print("Near miss. +0 credits. You now have " + str(credits) + " credits.")
+        elif slot2 == slot3:
+            if slot1 == slot3:
+                credits = credits + 6
+                print("JACKPOT! +5 credits! You now have " + str(credits) + " credits.")
+            else:
+                maybe = random.randint(1, 2)
+                if maybe == 1:
+                    credits = credits + 1
+                    print("Near miss. +1 credits. You now have " + str(credits) + " credits.")
+                else:
+                    print("Near miss. +0 credits. You now have " + str(credits) + " credits.")
+        else:
+            print("You got nothing. You now have " + str(credits) + " credits.")
+    elif choice.lower() == "exit":
+        x = x + 1
+    else:
+        print("That doesn't work.")
