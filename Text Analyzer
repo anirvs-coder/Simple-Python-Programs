@@ -1,0 +1,34 @@
+user_text = input("What is the text:")
+
+user_text_split = user_text.split()
+number_of_words = len(user_text_split)
+print("You have " + str(number_of_words) + " word(s).")
+
+
+number_of_characters = 0
+for f in user_text:
+    number_of_characters = number_of_characters + 1
+print("You have " + str(number_of_characters) + " character(s).")
+
+number_of_sentences = 0
+for i in user_text:
+    if i == ".":
+        number_of_sentences = number_of_sentences + 1
+print("You have " + str(number_of_sentences) + " sentence(s).")
+
+length_of_words = 0
+for e in user_text_split:
+    length_of_words = length_of_words + len(e)
+average_length_of_words = length_of_words//number_of_words
+print("You have ABOUT " + str(average_length_of_words) + " characters as an average length of all your word(s).")
+
+sentences = user_text.split(".")
+
+number_of_words_for_sentences = 0
+for j in sentences:
+    words = j.split()
+    number_of_words_for_sentences = number_of_words_for_sentences + len(words)
+
+average_length_of_sentences = number_of_words_for_sentences // number_of_sentences
+print("You have ABOUT " + str(average_length_of_sentences) + " words as an average length of all your sentence(s).")
+
